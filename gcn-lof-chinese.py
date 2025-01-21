@@ -13,15 +13,6 @@ from torch_geometric.utils import from_scipy_sparse_matrix
 seed = 42
 DATA_PATH = "./full_datasets/"
 BATCH_SIZE = 128
-prompt_dim = 5  # 提示特征的维度
-
-
-# 生成提示特征的函数
-def generate_prompt(y, prompt_dim):
-    y_array = y.values.reshape(-1, 1)  # 将 y 转换为 NumPy 数组并 reshape
-    prompt = np.ones((y.shape[0], prompt_dim)) * (y_array == 0)
-    return prompt
-
 
 # 定义函数将数据转换为图数据
 def create_graph_data(x, y, k=10):
@@ -37,7 +28,6 @@ def create_graph_data(x, y, k=10):
     data = Data(x=x, edge_index=edge_index, y=y)
     return data
 
-
 # 加载数据集并转换为图数据
 cids = []
 for _, _, cid in os.walk(DATA_PATH):
@@ -50,21 +40,12 @@ for cid in cids:
     silos[_cid] = {}
     x_train, y_train, x_test, y_test = load_data.load_data(os.path.join(DATA_PATH, cid), info=False)
 
-    # 生成提示特征并加入到训练和测试数据
-    train_prompt = generate_prompt(y_train, prompt_dim)
-    test_prompt = generate_prompt(y_test, prompt_dim)
-
-    # 将提示特征拼接到原始数据上
-    x_train_with_prompt = np.hstack([x_train, train_prompt])
-    x_test_with_prompt = np.hstack([x_test, test_prompt])
-
     # 转换为图数据
-    train_data = create_graph_data(x_train_with_prompt, y_train)
-    test_data = create_graph_data(x_test_with_prompt, y_test)
+    train_data = create_graph_data(x_train, y_train)
+    test_data = create_graph_data(x_test, y_test)
 
     silos[_cid]["train_data"] = train_data
     silos[_cid]["test_data"] = test_data
-
 
 # 定义GCN模型
 class GCN(torch.nn.Module):
@@ -80,7 +61,6 @@ class GCN(torch.nn.Module):
         x = F.dropout(x, training=self.training)
         x = self.conv2(x, edge_index)
         return F.log_softmax(x, dim=1)
-
 
 # 训练和测试GCN模型，增加过拟合检测
 num_epochs = 50
