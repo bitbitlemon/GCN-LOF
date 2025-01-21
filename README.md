@@ -23,7 +23,6 @@ GCN-LOF-main/
 ├── utils/
 │   ├── data_loader.py        # Data loading utilities
 │   ├── metrics.py            # Performance metrics
-└── .idea/                    # IDE configuration files (optional)
 ```
 
 ## Installation
@@ -81,15 +80,3 @@ Below is an example to train and evaluate the model:
 python main.py --train --dataset cora --epochs 100
 python main.py --test --dataset cora
 ```
-
-## Contributing
-We welcome contributions! Please follow these steps:
-1. Fork the repository.
-2. Create a new branch.
-3. Commit your changes and open a pull request.
-
-## License
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
-## Contact
-For questions or feedback, please contact [your-email@example.com].
