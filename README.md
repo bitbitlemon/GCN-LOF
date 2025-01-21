@@ -1,7 +1,7 @@
 # GCN-LOF: A Graph Convolutional Network with Local Outlier Factor
 
 ## Overview
-The paper 'Investigation of Intrusion Detection Methods for Smart Systems Utilizing the GCN-LOF Algorithm' code.
+The paper '**Investigation of Intrusion Detection Methods for Smart Systems Utilizing the GCN-LOF Algorithm**' code.
 This repository implements **GCN-LOF**, a method that combines Graph Convolutional Networks (GCNs) with the Local Outlier Factor (LOF) for anomaly detection and other graph-based learning tasks. The code is written in Python and leverages popular libraries such as PyTorch for deep learning.
 
 ## Features
